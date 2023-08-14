@@ -59,11 +59,7 @@
                                         {{$image->value}}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
-                                        @if($image->status == 1)
-                                            <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">Active</span>
-                                        @else
-                                            <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">Deactive</span>
-                                        @endif
+                                        <img src="{{asset('images/' . $image->image)}}" alt="{{$image->title}}" style="height: 100px !important;">
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
                                         {{$image->views}}
