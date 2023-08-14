@@ -1,15 +1,6 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-        <!-- Role -->
-        <div>
-            <x-input-label for="role" :value="__('Register As')" />
-           
-            <select name="role" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" >
-                <option value="student" selected>Student</option>
-                <option value="teacher">Teacher</option>
-            </select>
-        </div>
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />

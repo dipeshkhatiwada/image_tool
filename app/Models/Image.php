@@ -11,7 +11,7 @@ class Image extends Model
     use HasFactory;
     protected  $table = 'images';
 
-    protected $fillable = ['title', 'description', 'price', 'photo', 'views', 'roles'];
+    protected $fillable = ['title', 'description', 'value', 'image', 'views', 'owner_id'];
 
 
 }

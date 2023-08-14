@@ -2,50 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use App\Models\Image;
-use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
 
 class ImageController extends Controller
 {
-
     public function index()
     {
-        $data['image'] = Image::where(function($query) {
-            if (!auth()->user()->is_admin) {
-                $query->where('owner', auth()->user()->id);
+        $images = Image::where(function($query) {
+            if (!(auth()->user()->role == 'admin')) {
+                $userId = auth()->user()->id;
+                $query->where('owner_id', $userId);
             }
         })->get();
-        return view('image.index',compact('data'));
+        return view('image.index',compact('images'));
     }
     public function create()
     {
-        $data = [];
-        
-        return view('image.create',compact('data'));
+        return view('image.create');
     }
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
-        $request->validate([
-            'title' => 'required|max:255|unique:images',
-            'description' => 'required',
-            'price' => 'required',
-        ]);
-        if ($request->has('img_photo')){
-            $photo = $request->file('img_photo');
-            $path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
-            $photo_name = rand(111, 999).'_'.$photo->getClientOriginalName();
-            $photo->move($path, $photo_name);
-            $request->request->add(['photo' => $photo_name]);
+        if ($request->has('image_file')){
+            $imagePhoto = $request->file('image_file');
+            $name = rand(1111, 9999).'_'.$imagePhoto->getClientOriginalName();
+            $dir = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
+            $imagePhoto->move($dir, $name);
+            $request->request->add(['image' => $name]);
         }
-        $request->request->add(['owner' => auth()->user()->id]);
+        $request->request->add(['owner_id' => auth()->user()->id]);
         Image::create($request->all());
-       
         return redirect()->route('image.index')
-            ->with('success','Image created successfully.');
+            ->with('success','Image added successfully!');
     }
 
     public function show(int $id)
@@ -61,41 +51,32 @@ class ImageController extends Controller
     }
     public function edit(int $id)
     {
-        $data['image'] = Image::find($id);
-        if (!$data['image']) {
-            request()->session()->flash('error', 'Invalid request!!!');
+        $image = Image::find($id);
+        if (!$image) {
+            request()->session()->flash('error', 'Image not found !!');
             return redirect()->route('image.index');
         }
-        return view('image.edit',compact('data'));
+        return view('image.edit',compact('image'));
     }
 
-    public function update(Request $request, int $id)
+    public function update(ImageRequest $request, int $id)
     {
-        $request->validate([
-          'title' => [
-            'required','max:255',
-            Rule::unique('images')->ignore($id),
-          ],
-          'description' => 'required',
-          'price'       => 'required',
-        ]);
-        $data['image'] = Image::find($id);
-        if (!$data['image']) {
+        $image = Image::find($id);
+        if (!$image) {
             request()->session()->flash('error_message', 'Invalid request for details');
             return redirect()->route('gallery_image.index');
         }
         if ($request->has('img_photo')){
-            $photo = $request->file('img_photo');
-            $path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
-            $photo_name = rand(111, 999).'_'.$photo->getClientOriginalName();
-            $photo->move($path, $photo_name);
-            $request->request->add(['photo' => $photo_name]);
+            $imagePhoto = $request->file('img_photo');
+            $name = rand(1111, 9999).'_'.$imagePhoto->getClientOriginalName();
+            $dir = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
+            $imagePhoto->move($dir, $name);
+            $request->request->add(['image' => $name]);
         }
-        $image = $data['image']->update($request->all());
-        if ($image) {
-            $request->session()->flash('success', 'Image Update Successfully ');
+        if ($image->update($request->all())) {
+            $request->session()->flash('success', 'Image Update Successfully!!');
         } else {
-            $request->session()->flash('error', 'Image Update Failed');
+            $request->session()->flash('error', 'Failed to update Image !!');
         }
         return redirect()->route('image.index');
     }
@@ -103,13 +84,13 @@ class ImageController extends Controller
     public function destroy(Request $request, int $id)
     {
        
-        if(!$data['image'] = Image::find($id)){
-            $request->session()->flash('error', 'Invalid request!');
+        if(!$image = Image::find($id)){
+            $request->session()->flash('error', 'Image not found !!');
         }
-        if($data['image']->delete()){
-            $request->session()->flash('success', 'Image Deletion Successful!');
+        if($image->delete()){
+            $request->session()->flash('success', 'Image Deleted Successful !!');
         }else{
-            $request->session()->flash('error', ' Image Deletion Failed!');
+            $request->session()->flash('error', ' Failed to Delete Image !!');
         }
         return redirect()->route('image.index');
     }
