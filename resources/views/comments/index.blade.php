@@ -35,7 +35,9 @@
                                     Message
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-gray-900">
+                                    @if(auth()->user()->roles == 'admin')
                                     Action
+                                    @endif
                                 </th>
                             </tr>
                             </thead>
@@ -46,7 +48,7 @@
                                         {{$comment->image->title}}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
-                                        {{$comment->description}}
+                                        <img src="{{asset('images/' . $comment->image->image)}}" alt="{{$comment->image->title}}" style="height: 100px !important;">
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
                                         {{$comment->addedBy->name}}
@@ -55,11 +57,13 @@
                                         {{$comment->message}}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
+                                        @if(auth()->user()->roles == 'admin')
                                         <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                                                 class="inline-block focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                                                 type="button">
                                             Delete
                                         </button>
+                                        @endif
                                         <div id="popup-modal" tabindex="-1"
                                              class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
                                             <div class="relative w-full h-full max-w-md md:h-auto">
@@ -75,7 +79,7 @@
                                                         </svg>
                                                         <span class="sr-only">Close modal</span>
                                                     </button>
-                                                    <form action="{{route('image.destroy',$image->id)}}" method="POST"
+                                                    <form action="{{route('comment.destroy',$comment->id)}}" method="POST"
                                                           style="display:inline-block;">
                                                         @csrf
                                                         @method('DELETE')

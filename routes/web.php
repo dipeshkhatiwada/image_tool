@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\FrontController::class, 'index'])->name('home');
+Route::get('{id}/image', [\App\Http\Controllers\FrontController::class, 'image'])->name('home.image');
+Route::post('comment/save', [CommentController::class, 'store'])->name('comment.save');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

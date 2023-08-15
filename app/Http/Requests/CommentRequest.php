@@ -15,7 +15,7 @@ class CommentRequest extends FormRequest
     {
         return [
           'message'     => ['required', 'string'],
-          'added_by'    => ['required', 'integer'],
+          'image_id'    => ['required', 'integer'],
         ];
     }
 }

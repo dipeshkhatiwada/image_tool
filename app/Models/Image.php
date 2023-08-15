@@ -3,12 +3,14 @@
 namespace App\Models;
 
 
+use Coderflex\Laravisit\Concerns\CanVisit;
+use Coderflex\Laravisit\Concerns\HasVisits;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class Image extends Model implements CanVisit
 {
-    use HasFactory;
+    use HasFactory, HasVisits;
     protected  $table = 'images';
 
     protected $fillable = ['title', 'description', 'value', 'image', 'views', 'owner_id'];

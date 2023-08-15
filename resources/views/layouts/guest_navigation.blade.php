@@ -13,7 +13,7 @@
             </div>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <x-slot name="trigger">
+                <div class="flex">
                         @if (Route::has('login'))
                             <div class=" fixed top-0 right-0 px-6 py-4 sm:block">
                                 @auth
@@ -23,22 +23,22 @@
                                         </x-nav-link>
                                     </div>
                                 @else
-                                    <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                                    <div class="shrink-0 flex items-center">
+                                        <a href="{{ route('login') }}">
                                             {{ __('Log In') }}
-                                        </x-nav-link>
+                                        </a>
                                     </div>
                                     @if (Route::has('register'))
-                                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                                        <div class="shrink-0 flex items-center">
+                                            <a href="{{ route('register') }}">
                                                 {{ __('Register') }}
-                                            </x-nav-link>
+                                            </a>
                                         </div>
                                     @endif
                                 @endauth
                             </div>
                         @endif
-                    </x-slot>
+                </div>
 
             </div>
             <!-- Hamburger -->
