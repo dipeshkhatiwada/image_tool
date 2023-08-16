@@ -61,7 +61,7 @@
 
                         <div class="mr-2 max-w-sm min-w-m bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="{{route('home.image', $img->id)}}">
-                                <img class="rounded-t-lg" src="{{asset('images/' . $img->image)}}" alt="{{ $img->title }}" style="height: 300px;" />
+                                <img class="rounded-t-lg" src="{{asset('images/' . $img->image)}}" alt="{{ $img->title }}" style="height: 200px; width:150px;" />
                             </a>
                             <div class="p-5">
                                 <a href="{{route('home.image', $img->id)}}">

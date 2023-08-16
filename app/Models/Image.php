@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Coderflex\Laravisit\Concerns\CanVisit;
 use Coderflex\Laravisit\Concerns\HasVisits;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +13,11 @@ class Image extends Model implements CanVisit
     protected  $table = 'images';
 
     protected $fillable = ['title', 'description', 'value', 'image', 'views', 'owner_id'];
+
+    function  owner()
+    {
+        return $this->belongsTo(User::class,'owner_id');
+    }
 
 
 }
