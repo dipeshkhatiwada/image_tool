@@ -40,7 +40,7 @@
     <main>
         <div class="py-1">
             <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-scroll shadow-sm sm:rounded-lg">
                     @if (session('success'))
                         <div class="p-4 mb-4 text-sm text-blue-600 rounded-lg bg-blue-50 " role="alert">
                             {{ session('success') }}
@@ -59,9 +59,9 @@
                     <div class="p-2 text-gray-900 flex">
                         @foreach($images as $img)
 
-                        <div class="mr-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div class="mr-2 max-w-sm min-w-m bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="{{route('home.image', $img->id)}}">
-                                <img class="rounded-t-lg" src="{{asset('images/' . $img->image)}}" alt="{{ $img->title }}" style="max-height: 300px;" />
+                                <img class="rounded-t-lg" src="{{asset('images/' . $img->image)}}" alt="{{ $img->title }}" style="height: 300px;" />
                             </a>
                             <div class="p-5">
                                 <a href="{{route('home.image', $img->id)}}">

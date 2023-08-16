@@ -59,7 +59,7 @@
                                         {{$image->value}}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
-                                        <img src="{{asset('images/' . $image->image)}}" alt="{{$image->title}}" style="height: 100px !important;">
+                                        <img src="{{asset('images/' . $image->image)}}" alt="{{$image->title}}" style="height: 50px !important;">
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
                                         {{$image->visits->count()}}
