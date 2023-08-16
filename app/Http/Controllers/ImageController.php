@@ -26,9 +26,9 @@ class ImageController extends Controller
     public function store(ImageRequest $request)
     {
         if ($request->has('image_file')){
-            $imagePhoto = $request->file('image_file');
-            $name = rand(1111, 9999).'_'.$imagePhoto->getClientOriginalName();
             $dir = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
+            $imagePhoto = $request->file('image_file');
+            $name = rand(1111, 9999) . $imagePhoto->getClientOriginalName();
             $imagePhoto->move($dir, $name);
             $request->request->add(['image' => $name]);
         }
@@ -66,10 +66,10 @@ class ImageController extends Controller
             request()->session()->flash('error_message', 'Invalid request for details');
             return redirect()->route('gallery_image.index');
         }
-        if ($request->has('img_photo')){
-            $imagePhoto = $request->file('img_photo');
-            $name = rand(1111, 9999).'_'.$imagePhoto->getClientOriginalName();
+        if ($request->has('image_file')){
             $dir = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR ;
+            $imagePhoto = $request->file('image_file');
+            $name = rand(1111, 9999) . $imagePhoto->getClientOriginalName();
             $imagePhoto->move($dir, $name);
             $request->request->add(['image' => $name]);
         }
